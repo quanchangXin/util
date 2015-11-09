@@ -257,7 +257,6 @@ object PriorityQueue {
             throw new RuntimeException("error case found")
           }
         } else { //update
-          val arr = limitQueue._arr
           val e = genElement()
           if (limitQueue.size > 0) {
             updateIndex = rand.nextInt(limitQueue.size)
