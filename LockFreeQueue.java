@@ -6,9 +6,11 @@ import java.util.concurrent.atomic.AtomicReference;
  * code from codereview.stackexchange.com
  * 
  * use CAS operation and volatile semantic
- * in jvm memory model when read a volatile variable from main memory to working memory there are three operation read load and use 
- * each depends on before operation read must be executed before load and load must be executed before use.
- * when write a volatile variable to main memory from working memory assign store write executed sequentially 
+ * load read use assing store write operation are atomic for volatile variable,atomic for non volatile 32bit variable
+ * in jvm memory model when read a volatile variable from main memory to working memory 
+ * there are three operation read load and use 
+ * each depends on before operation,read must be executed before load and load must be executed before use.
+ * when write a volatile variable to main memory from working memory assign store write operation executed sequentially 
  * volatile variable have memory barrier semantic
  * 
  * 
