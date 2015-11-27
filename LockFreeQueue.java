@@ -1,10 +1,10 @@
-package com.wuzhi.concurrent;
+package com.seven.concurrent;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * code from codereview.stackexchange.com
- * 
+ * lock free queue and related tech(cas and jvm memory modle)
+ * code from codereview.stackexchange.com 
  * use CAS operation and volatile semantic
  * load read use assing store write operation are atomic for volatile variable,atomic for non volatile 32bit variable
  * in jvm memory model when read a volatile variable from main memory to working memory 
@@ -31,7 +31,7 @@ public class LockFreeQueue<T> {
 	   // there is a StoreStore Barrier  between Normal Store  and Volatile Store 
 	   // StoreStore Barrier
 	   // The sequence: Store1; StoreStore; Store2
-	   // ensures that Store1's data are visible to other processors (i.e., flushed to memory) before the data associated with Store2 and all subsequent store instructions. In general, StoreStore barriers are needed on processors that do not otherwise guarantee strict ordering of flushes from write buffers and/or caches to other processors or main memory. 
+	   // ensures that Store1's data are visible to other processors (i.e., flushed to memory) before the data associated with Store2 and all subsequent store instructions. 
        E value;//there is no need to use volatile
        volatile Node<E> next = null;
 
@@ -70,7 +70,7 @@ public class LockFreeQueue<T> {
        } while (!refHead.compareAndSet(head, next));
 
        T value = next.value;
-       //gc
+       //help gc
        next.value = null;
 
        return value;
